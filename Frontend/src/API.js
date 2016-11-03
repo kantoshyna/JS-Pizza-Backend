@@ -10,7 +10,7 @@ function backendGet(url, callback) {
         success: function(data){
             callback(null, data);
         },
-        fail: function() {
+        error: function() {
             callback(new Error("Ajax Failed"));
         }
     })
@@ -25,7 +25,7 @@ function backendPost(url, data, callback) {
         success: function(data){
             callback(null, data);
         },
-        fail: function() {
+        error: function() {
             callback(new Error("Ajax Failed"));
         }
     })
