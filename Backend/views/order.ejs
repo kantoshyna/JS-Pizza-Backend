@@ -1,0 +1,50 @@
+<% include common/header.ejs %>
+
+<div class="col-lg-10 col-md-10 col-sm-8 col-xs-6">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div style="padding-left: 120px; color: rgb(109, 109, 109); border-bottom: 1px gray solid; padding-right: 10px">
+            <span class="col-md-3">8 800 555 35 35</span>
+            <span class="col-md-3 c2">24 години 7 днів на тиждень</span>
+            <span class="col-md-3 c1">Безкоштовна доставка піци</span>
+            <button class="btn btn-primary" style=" display: inline">Ввійти</button>
+        </div>
+
+        <div class=" c3" style="padding-left: 120px;color:white ">
+            Піца
+        </div>
+    </nav>
+
+    <div class="all-pizas">
+        Форма замовлення
+    </div>
+
+    <nav style=" padding: 5px 0;">
+        <div class="toggle"><i class="fas fa-bars menu"></i></div>
+        <ul>
+            <li style="background-color: #f0991b; color: white">Усі</li>
+            <li>М'ясні</li>
+            <li>З ананасами</li>
+            <li>З грибами</li>
+            <li>З морепродуктами</li>
+            <li>Вега</li>
+        </ul>
+    </nav>
+</div>
+
+<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 big-cont">
+    <div style="height: 61px; background-color: white; padding-top: 6%; padding-left: 5px"><b>Замовлення</b>
+        <span class="bl-orange-label">0</span>
+        <div id="clear" style="text-align:right; padding-right: 5px; color: rgb(175, 175, 175);">Очистити
+            замовлення
+        </div>
+    </div>
+    <div id="cart">
+
+    </div>
+    <div style=" background-color: white; bottom: 0;padding-left: 5px">Сума замовлення
+        <div class="sum">0 грн.</div>
+        <button class="btn btn-primary" style="margin-bottom: 10px">Замовити</button>
+    </div>
+</div>
+
+<% include common/footer.ejs %>

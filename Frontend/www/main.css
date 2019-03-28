@@ -1,0 +1,174 @@
+.fixed-badge {
+    background-color: #f0991b;
+    z-index: 2;
+    left: 10px;
+    top: 0;
+    width: 100px;
+    height: 70px;
+    color: white;
+    position: fixed;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 7px;
+}
+
+.all-pizas {
+    margin-top: 61px;
+    height: 50px;
+    width: 100%;
+    color: black;
+    font-weight: 800;
+    font-size: 4rem;
+    text-align: center;
+    padding-left: 23%;
+}
+
+.sum {
+    text-align: right;
+    padding-right: 5px;
+}
+
+nav {
+    width: 100%;
+}
+
+ul {
+    padding: 0;
+    margin: 0 auto;
+    width: 80%;
+    text-align: right;
+    padding-left: 15%;
+}
+
+ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 20px;
+    color: #f0991b;
+}
+
+ul li:hover {
+    background: #f0991b;
+    color: white;
+}
+
+
+ul li a {
+    color: #f0991b;
+    text-decoration: none;
+}
+
+.toggle {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f0991b;
+    text-align: right;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 30px;
+    display: none;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .toggle {
+        display: block;
+    }
+
+    ul {
+        width: 100%;
+        display: none;
+    }
+
+    ul li {
+        display: block;
+        text-align: center;
+    }
+
+    .active {
+        display: block;
+    }
+
+    .c2 {
+        visibility: hidden;
+    }
+}
+
+.minus {
+    background-color: red !important;
+    border-radius: 100%;
+}
+
+.plus {
+    background-color: green !important;
+    border-radius: 100%;
+}
+
+.btn-primary {
+    background-color: #f0991b !important;
+    color: white;
+    border: none;
+}
+
+.price-block {
+    display: inline;
+    width: 50%;
+}
+
+#cart {
+    background-color: rgb(243, 243, 243);
+}
+
+#clear {
+    cursor: pointer;
+}
+
+.big-cont {
+    border: none;
+    z-index: 2;
+    height: 100%;
+    background-color: white;
+    padding: 0;
+    position: fixed;
+    right: 0;
+}
+
+.bl-orange-label {
+
+    font-size: 0.64285714rem;
+    background: #f2711c;
+    color: #fff;
+    border-radius: 100%;
+    width: 2rem;
+    height: 2rem;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.7;
+    z-index: 2;
+    font-size: 14px;
+
+}
+
+.title {
+    font-size: 17px;
+    text-decoration: underline;
+    font-weight: 800;
+}
+
+.navbar {
+    z-index: 1;
+    background: #080808d1;
+    position: fixed;
+    width: 100%;
+    border-radius: 0;
+    height: 61px;
+    margin-left: -15px;
+}
+
+@media (max-width:900px) {
+    .c1 {
+        visibility: none;
+    }
+
+}
