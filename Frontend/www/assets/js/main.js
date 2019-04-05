@@ -61,10 +61,14 @@ $(function () {
     var PizzaMenu = require('./pizza/PizzaMenu');
     var PizzaCart = require('./pizza/PizzaCart');
 
+    require("./API").getPizzaList(function (error, data) {
+        PizzaMenu.initialiseMenu(data);
+        $("#all").trigger('click');
+    });
+
     PizzaCart.initialiseCart();
-    PizzaMenu.initialiseMenu();
 });
-},{"./pizza/PizzaCart":4,"./pizza/PizzaMenu":5}],4:[function(require,module,exports){
+},{"./API":1,"./pizza/PizzaCart":4,"./pizza/PizzaMenu":5}],4:[function(require,module,exports){
 /**
  * Created by chaika on 02.02.16.
  */
@@ -94,7 +98,7 @@ function addToCart(pizza, size) {
     quantity: 1
   });
 
-  basil.set('cart', Cart);
+  basil.set("cart", Cart);
 
   //Оновити вміст кошика на сторінці
   updateCart();
@@ -102,10 +106,13 @@ function addToCart(pizza, size) {
 
 function removeFromCart(cart_item) {
   //Видалити піцу з кошика
+  var k = 0;
   Cart.forEach(function (item) {
-    if (item.pizza == cart_item.pizza) {
-      basil.remove(item); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if (item.pizza == cart_item.pizza && item.size == cart_item.size) {
+      Cart.splice(k, 1);
+      basil.set("cart", Cart);
     }
+    k++;
   });
 
   //Після видалення оновити відображення
@@ -167,18 +174,26 @@ function updateCart() {
     });
     $node.find(".minus").click(function () {
       //Зменшуємо кількість замовлених піц
-      cart_item.quantity -= 1;
+      if (cart_item.quantity > 1) {
+        cart_item.quantity -= 1;
+      } else {
+        removeFromCart(cart_item);
+      }
       $(".bl-orange-label").text(--counter);
-
       //Оновлюємо відображення
       updateCart();
+    });
+    $node.find(".btn:contains(Прибрати)").click(function () {
+      counter -= cart_item.quantity;
+      $(".bl-orange-label").text(counter);
+      removeFromCart(cart_item);
     });
 
     $cart.append($node);
   }
 
   Cart.forEach(showOnePizzaInCart);
-  basil.set('cart', Cart);
+  basil.set("cart", Cart);
   $(".sum").text(countPrice() + " грн.");
 }
 
@@ -193,14 +208,9 @@ function countPrice() {
 
 $("#clear").click(function () {
   Cart = [];
-  basil.set('cart', Cart);
+  basil.set("cart", Cart);
   initialiseCart();
 });
-
-$(".btn:contains(Прибрати)").click(function (item) {
-  removeFromCart(item);
-});
-
 
 exports.removeFromCart = removeFromCart;
 exports.addToCart = addToCart;
@@ -216,9 +226,9 @@ exports.updateCart = updateCart;
 /**
  * Created by chaika on 02.02.16.
  */
-var Templates = require('../Templates');
-var PizzaCart = require('./PizzaCart');
-//var Pizza_List = require('../Pizza_List');
+var Templates = require("../Templates");
+var PizzaCart = require("./PizzaCart");
+var Pizza_List;
 var api = require("../API");
 
 //HTML едемент куди будуть додаватися піци
@@ -244,11 +254,10 @@ function showPizzaList(list) {
             if (!PizzaCart.getPizzaFromCart(pizza.id, PizzaCart.PizzaSize.Big)) {
                 PizzaCart.addToCart(pizza, PizzaCart.PizzaSize.Big);
             } else {
-                PizzaCart.getPizzaFromCart(pizza.id, PizzaCart.PizzaSize.Big).quantity++;
+                PizzaCart.getPizzaFromCart(pizza.id, PizzaCart.PizzaSize.Big)
+                    .quantity++;
                 PizzaCart.updateCart();
             }
-
-
         });
         $node.find(".buy-small").click(function () {
             counter = parseInt($(".bl-orange-label").text()) || 0;
@@ -256,10 +265,10 @@ function showPizzaList(list) {
             if (!PizzaCart.getPizzaFromCart(pizza.id, PizzaCart.PizzaSize.Small)) {
                 PizzaCart.addToCart(pizza, PizzaCart.PizzaSize.Small);
             } else {
-                PizzaCart.getPizzaFromCart(pizza.id, PizzaCart.PizzaSize.Small).quantity++;
+                PizzaCart.getPizzaFromCart(pizza.id, PizzaCart.PizzaSize.Small)
+                    .quantity++;
                 PizzaCart.updateCart();
             }
-
         });
 
         $pizza_list.append($node);
@@ -272,23 +281,70 @@ function filterPizza(filter) {
     //Масив куди потраплять піци які треба показати
     var pizza_shown = [];
 
+    console.log("came in");
+
     Pizza_List.forEach(function (pizza) {
         //Якщо піка відповідає фільтру
-        //pizza_shown.push(pizza);
-
-        //TODO: зробити фільтри
+        if (pizza.content[filter]) {
+            pizza_shown.push(pizza);
+            console.log("pushed");
+        }
+        if (filter == "meat") {
+            console.log("meat filter");
+            if (pizza.content['chicken']) {
+                pizza_shown.push(pizza);
+            }
+        }
+        if (filter == "vega") {
+            if (pizza.type == 'Вега піца') {
+                pizza_shown.push(pizza);
+            }
+        }
     });
 
     //Показати відфільтровані піци
     showPizzaList(pizza_shown);
 }
 
-function initialiseMenu() {
+function initialiseMenu(data) {
     //Показуємо усі піци
     //showPizzaList(Pizza_List);
+    Pizza_List = data;
+    $("#all").click(function (params) {
+        api.getPizzaList(function (error, data) {
+            showPizzaList(data);
+        });
+    });
 
-    api.getPizzaList(function (error, data) {
-        showPizzaList(data);
+    $("#meat").click(function (params) {
+        api.getPizzaList(function (error, data) {
+            filterPizza("meat");
+        });
+    });
+    $("#ananas").click(function (params) {
+        api.getPizzaList(function (error, data) {
+            filterPizza("pineapple");
+        });
+    });
+    $("#mushrooms").click(function (params) {
+        api.getPizzaList(function (error, data) {
+            filterPizza("mushroom");
+        });
+    });
+    $("#seafood").click(function (params) {
+        api.getPizzaList(function (error, data) {
+            filterPizza("ocean");
+        });
+    });
+    $("#vega").click(function (params) {
+        api.getPizzaList(function (error, data) {
+            filterPizza("vega");
+        });
+    });
+
+    $("li").click(function () {
+        $("li").removeClass("active");
+        $(this).addClass("active");
     });
 }
 

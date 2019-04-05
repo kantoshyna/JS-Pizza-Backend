@@ -47,16 +47,12 @@ ul li {
     color: #f0991b;
 }
 
-ul li:hover {
+ul li:hover,
+ul li.active {
     background: #f0991b;
     color: white;
 }
 
-
-ul li a {
-    color: #f0991b;
-    text-decoration: none;
-}
 
 .toggle {
     width: 100%;
@@ -67,31 +63,6 @@ ul li a {
     color: #fff;
     font-size: 30px;
     display: none;
-}
-
-
-@media only screen and (max-width: 500px) {
-    .toggle {
-        display: block;
-    }
-
-    ul {
-        width: 100%;
-        display: none;
-    }
-
-    ul li {
-        display: block;
-        text-align: center;
-    }
-
-    .active {
-        display: block;
-    }
-
-    .c2 {
-        visibility: hidden;
-    }
 }
 
 .minus {
@@ -166,9 +137,60 @@ ul li a {
     margin-left: -15px;
 }
 
-@media (max-width:900px) {
+@media (max-width:992px) {
     .c1 {
-        visibility: none;
+        visibility: hidden;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .toggle {
+        display: block;
     }
 
+    ul {
+        width: 100%;
+        display: none;
+    }
+
+    ul li {
+        display: block;
+        text-align: center;
+    }
+
+    .active {
+        display: block;
+    }
+
+    .c2 {
+        visibility: hidden;
+    }
+
+}
+
+#googleMap {
+    width: 400px;
+    height: 400px;
+}
+
+@media (min-width:576px) {
+    #googleMap {
+        width: 195%;
+        height: 400px;
+    }
+}
+
+@media (min-width:768px) {
+    #googleMap {
+        width: 145%;
+        height: 400px;
+    }
+}
+
+@media (min-width:992px) {
+    #googleMap {
+        width: 105%;
+        height: 400px;
+    }
 }

@@ -1,38 +1,25 @@
 <% include common/header.ejs %>
 
-<div class="col-lg-10 col-md-10 col-sm-8 col-xs-6">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div style="padding-left: 120px; color: rgb(109, 109, 109); border-bottom: 1px gray solid; padding-right: 10px">
-            <span class="col-md-3">8 800 555 35 35</span>
-            <span class="col-md-3 c2">24 години 7 днів на тиждень</span>
-            <span class="col-md-3 c1">Безкоштовна доставка піци</span>
-            <button class="btn btn-primary" style=" display: inline">Ввійти</button>
-        </div>
 
-        <div class=" c3" style="padding-left: 120px;color:white ">
-            Піца
-        </div>
-    </nav>
+<div class="all-pizas">
+    Усі піци
+</div>
 
-    <div class="all-pizas">
-        Усі піци
-    </div>
+<nav style=" padding: 5px 0;">
+    <div class="toggle"><i class="fas fa-bars menu"></i></div>
+    <ul>
+        <li id="all">Усі</li>
+        <li id="meat">М'ясні</li>
+        <li id="ananas">З ананасами</li>
+        <li id="mushrooms">З грибами</li>
+        <li id="seafood">З морепродуктами</li>
+        <li id="vega">Вега</li>
+    </ul>
+</nav>
 
-    <nav style=" padding: 5px 0;">
-        <div class="toggle"><i class="fas fa-bars menu"></i></div>
-        <ul>
-            <li style="background-color: #f0991b; color: white">Усі</li>
-            <li>М'ясні</li>
-            <li>З ананасами</li>
-            <li>З грибами</li>
-            <li>З морепродуктами</li>
-            <li>Вега</li>
-        </ul>
-    </nav>
+<div id="pizza_list" style="padding-left: 15%;">
 
-    <div id="pizza_list" style="padding-left: 15%;">
-
-    </div>
+</div>
 </div>
 
 <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 big-cont">

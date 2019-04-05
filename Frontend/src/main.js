@@ -7,6 +7,10 @@ $(function () {
     var PizzaMenu = require('./pizza/PizzaMenu');
     var PizzaCart = require('./pizza/PizzaCart');
 
+    require("./API").getPizzaList(function (error, data) {
+        PizzaMenu.initialiseMenu(data);
+        $("#all").trigger('click');
+    });
+
     PizzaCart.initialiseCart();
-    PizzaMenu.initialiseMenu();
 });
