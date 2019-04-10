@@ -21,6 +21,7 @@
     font-size: 4rem;
     text-align: center;
     padding-left: 23%;
+    display: inline-block;
 }
 
 .sum {
@@ -45,6 +46,7 @@ ul li {
     display: inline-block;
     padding: 20px;
     color: #f0991b;
+    cursor: pointer;
 }
 
 ul li:hover,
@@ -121,6 +123,10 @@ ul li.active {
 
 }
 
+.form-check {
+    display: inline-block;
+}
+
 .title {
     font-size: 17px;
     text-decoration: underline;
@@ -174,23 +180,40 @@ ul li.active {
     height: 400px;
 }
 
+form {
+    width: 385px;
+    margin: 5%;
+}
+
 @media (min-width:576px) {
     #googleMap {
-        width: 195%;
+        width: 95%;
         height: 400px;
+    }
+
+    form {
+        width: 100%;
     }
 }
 
 @media (min-width:768px) {
     #googleMap {
-        width: 145%;
+        width: 101%;
         height: 400px;
+    }
+
+    form {
+        width: 94%;
     }
 }
 
 @media (min-width:992px) {
     #googleMap {
-        width: 105%;
+        width: 85%;
         height: 400px;
+    }
+
+    form {
+        width: 75%;
     }
 }

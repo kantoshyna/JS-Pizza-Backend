@@ -64,7 +64,7 @@ function geocodeAddress(adress, callback) {
             var coordinates = results[0].geometry.location;
             callback(null, coordinates);
         } else {
-            callback(new Error("Can	not	find	the	adress"));
+            callback(new Error("Can	not	find the adress"));
         }
     });
 }
