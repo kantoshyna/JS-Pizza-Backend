@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
         <label>Адреса</label>
-        <input type="tel" class="form-control" placeholder="Адреса">
+        <input type="text" class="form-control" placeholder="Адреса" id="address">
     </div>
     <div class="form-group">
         <label>Номер телефону</label>
@@ -26,12 +26,17 @@
     <button type="submit" class="btn btn-primary" style="float: right">Замовити</button>
 </form>
 
+<div id="gray">
+    <label>Приблизний час доставки: </label>
+    <span id='time'></span>
+</div>
+
 <div id="googleMap">
 
 </div>
 </div>
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDH_tkB4xQDjMxj1hANfnFQLPWrnfDMnAU">
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBu8EfHXfhweZE-W19Uo2d_UIFrmKvOeMo">
 </script>
 <script src="assets/js/map.js"></script>
 <% include common/footer.ejs %>

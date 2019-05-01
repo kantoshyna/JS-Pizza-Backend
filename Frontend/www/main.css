@@ -96,6 +96,14 @@ ul li.active {
     cursor: pointer;
 }
 
+#gray {
+    height: 29px;
+    width: 45%;
+    margin: 1% 5%;
+    padding: 5px 0 0 5px;
+    background-color: rgb(243, 243, 243);
+}
+
 .big-cont {
     border: none;
     z-index: 2;
@@ -178,11 +186,15 @@ ul li.active {
 #googleMap {
     width: 400px;
     height: 400px;
+    position: relative;
+    overflow: hidden;
+    margin: 15px
 }
 
 form {
     width: 385px;
     margin: 5%;
+    display: inline-block;
 }
 
 @media (min-width:576px) {

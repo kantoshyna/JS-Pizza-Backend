@@ -124,6 +124,13 @@ function updateCart() {
   Cart.forEach(showOnePizzaInCart);
   basil.set("cart", Cart);
   $(".sum").text(countPrice() + " грн.");
+
+
+  if (Cart.length != 0) {
+    $('#order').attr('href', 'order.html');
+  } else {
+    $('#order').removeAttr('href');
+  }
 }
 
 function countPrice() {

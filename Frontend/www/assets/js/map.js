@@ -1,92 +1,137 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-function initialize() {
-    //Тут починаємо працювати з картою
-    var mapProp = {
-        center: new google.maps.LatLng(50.464379, 30.519131),
-        zoom: 11
-    };
-    var html_element = document.getElementById("googleMap");
-    var map = new google.maps.Map(html_element, mapProp);
-    //Карта створена і показана
-
-    var point = new google.maps.LatLng(50.464379, 30.519131);
-    var marker = new google.maps.Marker({
-        position: point,
-        //map	- це змінна карти створена за допомогою new	    google.maps.Map(...)
-        map: map,
-        icon: "assets/images/map-icon.png"
-    });
-
-    google.maps.event.addListener(map, 'click',
-        function (me) {
-            var coordinates = me.latLng;
-            //coordinates	- такий самий об’єкт як створений new	        google.maps.LatLng(...)
-        });
-
-
-    function geocodeLatLng(latlng, callback) {
-        //Модуль за роботу з адресою
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({
-            'location': latlng
-        }, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK && results[1]) {
-                var adress = results[1].formatted_address;
-                callback(null, adress);
-            } else {
-                callback(new Error("Can't	find	adress"));
+(function e(t, n, r) {
+    function s(o, u) {
+        if (!n[o]) {
+            if (!t[o]) {
+                var a = typeof require == "function" && require;
+                if (!u && a) return a(o, !0);
+                if (i) return i(o, !0);
+                var f = new Error("Cannot find module '" + o + "'");
+                throw f.code = "MODULE_NOT_FOUND", f
             }
-        });
+            var l = n[o] = {
+                exports: {}
+            };
+            t[o][0].call(l.exports, function (e) {
+                var n = t[o][1][e];
+                return s(n ? n : e)
+            }, l, l.exports, e, t, n, r)
+        }
+        return n[o].exports
     }
+    var i = typeof require == "function" && require;
+    for (var o = 0; o < r.length; o++) s(r[o]);
+    return s
+})({
+    1: [function (require, module, exports) {
+        function initialize() {
+            //Тут починаємо працювати з картою
+            var mapProp = {
+                center: new google.maps.LatLng(50.464379, 30.519131),
+                zoom: 11
+            };
+            var html_element = document.getElementById("googleMap");
+            var map = new google.maps.Map(html_element, mapProp);
+            //Карта створена і показана
 
-    google.maps.event.addListener(map,
-        'click',
-        function (me) {
-            var coordinates = me.latLng;
-            geocodeLatLng(coordinates, function (err, adress) {
-                if (!err) {
-                    //Дізналися адресу
-                    console.log(adress);
+            var point = new google.maps.LatLng(50.464379, 30.519131);
+            var marker = new google.maps.Marker({
+                position: point,
+                //map	- це змінна карти створена за допомогою new	    google.maps.Map(...)
+                map: map,
+                icon: "assets/images/map-icon.png"
+            });
+            var destinationMarker = null;
+            var directionsDisplay = null;
+
+
+
+            function geocodeLatLng(latlng, callback) {
+                //Модуль за роботу з адресою
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'location': latlng
+                }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK && results[1]) {
+                        var adress = results[1].formatted_address;
+                        callback(null, adress);
+                    } else {
+                        callback(new Error("Can't	find	adress"));
+                    }
+                });
+            }
+
+            google.maps.event.addListener(map,
+                'click',
+                function (me) {
+                    if (destinationMarker) {
+                        destinationMarker.setMap(null);
+                    }
+
+                    var coordinates = me.latLng;
+                    var point1 = new google.maps.LatLng(coordinates.lat(), coordinates.lng());
+
+                    destinationMarker = new google.maps.Marker({
+                        position: point1,
+                        //map	- це змінна карти створена за допомогою new	    google.maps.Map(...)
+                        map: map
+                    });
+
+                    calculateRoute(point, coordinates, function (error, response) {
+                        if (directionsDisplay) {
+                            directionsDisplay.setMap(null)
+                        }
+
+                        directionsDisplay = new google.maps.DirectionsRenderer();
+                        directionsDisplay.setMap(map);
+
+                        directionsDisplay.setDirections(response);
+
+                        console.log(response.routes[0].legs[0]);
+                        //  $('#time').text(this.duration);
+                    });
+
+                    geocodeLatLng(coordinates, function (err, adress) {
+                        if (!err) {
+                            //Дізналися адресу
+                            console.log(adress);
+                        } else {
+                            console.log("Немає адреси");
+                        }
+                    });
+                });
+        }
+
+
+        function geocodeAddress(adress, callback) {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'address': address
+            }, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                    var coordinates = results[0].geometry.location;
+                    callback(null, coordinates);
                 } else {
-                    console.log("Немає адреси");
+                    callback(new Error("Can	not	find the adress"));
                 }
             });
-        });
-}
-
-
-function geocodeAddress(adress, callback) {
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({
-        'address': address
-    }, function (results, status) {
-        if (status === google.maps.GeocoderStatus.OK && results[0]) {
-            var coordinates = results[0].geometry.location;
-            callback(null, coordinates);
-        } else {
-            callback(new Error("Can	not	find the adress"));
         }
-    });
-}
 
-function calculateRoute(A_latlng, B_latlng, callback) {
-    var directionService = new google.maps.DirectionsService();
-    directionService.route({
-        origin: A_latlng,
-        destination: B_latlng,
-        travelMode: google.maps.TravelMode["DRIVING"]
-    }, function (response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            varleg = response.routes[0].legs[0];
-            callback(null, {
-                duration: leg.duration
+        function calculateRoute(A_latlng, B_latlng, callback) {
+            var directionService = new google.maps.DirectionsService();
+            directionService.route({
+                origin: A_latlng,
+                destination: B_latlng,
+                travelMode: google.maps.TravelMode["DRIVING"]
+            }, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    callback(null, response);
+                } else {
+                    callback(new Error("Can't	find	direction"));
+                }
             });
-        } else {
-            callback(new Error("Can't	find	direction"));
         }
-    });
-}
 
-//Коли сторінка завантажилась
-google.maps.event.addDomListener(window, 'load', initialize);
-},{}]},{},[1]);
+        //Коли сторінка завантажилась
+        google.maps.event.addDomListener(window, 'load', initialize);
+    }, {}]
+}, {}, [1]);
